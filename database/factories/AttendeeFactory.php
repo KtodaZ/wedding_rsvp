@@ -9,13 +9,21 @@ $factory->define(App\Attendee::class, function (Faker $faker) {
         $attending = $faker->boolean();
     }
 
+    $maxPlusOnes = 2;
+    $numPlusOnesAllowed = $faker->numberBetween(0, $maxPlusOnes);
+    $numPlusOnesAttending = 0;
+    if ($numPlusOnesAllowed) {
+        $numPlusOnesAttending = $faker->numberBetween(0, $maxPlusOnes);
+    }
+
     return [
-        'fname' => $faker->name,
-        'lname' => $faker->name,
+        'fname' => $faker->firstName,
+        'lname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'phone' => $faker->unique()->phoneNumber,
         'attending' => $attending,
         'replied' => $replied,
-        'num_plus_ones_allowed' => $faker->numberBetween(0, 2)
+        'num_plus_ones_allowed' => $numPlusOnesAllowed,
+        'num_plus_ones_attending' => $numPlusOnesAttending,
     ];
 });
