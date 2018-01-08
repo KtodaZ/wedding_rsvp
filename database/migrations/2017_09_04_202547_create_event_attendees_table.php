@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEventAttendeesTable extends Migration
 {
@@ -19,12 +19,14 @@ class CreateEventAttendeesTable extends Migration
             $table->string('lname');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->boolean('attending')->default(false);
             $table->boolean('replied')->default(false);
             $table->integer('num_plus_ones_allowed')->default(0);
             $table->integer('num_plus_ones_attending')->default(0);
 
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
