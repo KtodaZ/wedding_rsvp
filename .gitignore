@@ -23,3 +23,7 @@ Homestead.json
 
 .phpstorm.meta.php
 _ide_helper.php
+app/Http/Controllers/Web/
+public/mix-manifest.json
+public/css/
+public/js/
