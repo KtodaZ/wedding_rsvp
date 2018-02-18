@@ -1,19 +1,23 @@
 <?php
 
+use App\Attendee;
 use Faker\Generator as Faker;
 
-$factory->define(App\Attendee::class, function (Faker $faker) {
+$factory->define(Attendee::class, function (Faker $faker) {
+    $maxPlusOnes = 2;
+
     $replied = $faker->boolean();
-    $attending = false;
     if ($replied) {
         $attending = $faker->boolean();
+    } else {
+        $attending = false;
     }
 
-    $maxPlusOnes = 2;
     $numPlusOnesAllowed = $faker->numberBetween(0, $maxPlusOnes);
-    $numPlusOnesAttending = 0;
     if ($numPlusOnesAllowed) {
         $numPlusOnesAttending = $faker->numberBetween(0, $maxPlusOnes);
+    } else {
+        $numPlusOnesAttending = 0;
     }
 
     return [
@@ -21,9 +25,10 @@ $factory->define(App\Attendee::class, function (Faker $faker) {
         'lname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'phone' => $faker->unique()->phoneNumber,
+        'address' => $faker->streetAddress,
         'attending' => $attending,
         'replied' => $replied,
         'num_plus_ones_allowed' => $numPlusOnesAllowed,
-        'num_plus_ones_attending' => $numPlusOnesAttending,
+        'num_plus_ones_attending' => $numPlusOnesAttending
     ];
 });

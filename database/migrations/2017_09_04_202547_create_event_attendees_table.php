@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateEventAttendeesTable extends Migration
 {
+    const TABLE = 'attendees';
     /**
      * Run the migrations.
      *
@@ -13,7 +14,7 @@ class CreateEventAttendeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendees', function (Blueprint $table) {
+        Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
             $table->string('fname');
             $table->string('lname');
@@ -37,6 +38,6 @@ class CreateEventAttendeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendees');
+        Schema::dropIfExists(self::TABLE);
     }
 }
