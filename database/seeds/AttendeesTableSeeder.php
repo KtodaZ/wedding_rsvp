@@ -1,7 +1,7 @@
 <?php
 
-use App\Attendee;
 use Illuminate\Database\Seeder;
+use App\Models\Attendee;
 
 class AttendeesTableSeeder extends Seeder
 {
@@ -12,8 +12,6 @@ class AttendeesTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++) {
-            factory(Attendee::class)->create();
-        }
+        factory(Attendee::class, 10)->create();
     }
 }

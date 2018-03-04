@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +13,6 @@ use Illuminate\Http\Request;
 */
 
 Route::prefix('rsvp')->group(function () {
-    Route::get('attendee', '\AppApp\Http\Controllers\Api\AttendeeController@show');
+    // Everything for the RSVP form
+    Route::resource('attendee', '\AppApp\Http\Controllers\Api\AttendeeController');
 });

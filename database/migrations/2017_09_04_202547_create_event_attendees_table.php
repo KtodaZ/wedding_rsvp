@@ -20,11 +20,11 @@ class CreateEventAttendeesTable extends Migration
             $table->string('lname');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
             $table->boolean('attending')->default(false);
             $table->boolean('replied')->default(false);
+            $table->boolean('email_updates')->default(false);
+            $table->boolean('text_updates')->default(false);
             $table->integer('num_plus_ones_allowed')->default(0);
-            $table->integer('num_plus_ones_attending')->default(0);
 
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
