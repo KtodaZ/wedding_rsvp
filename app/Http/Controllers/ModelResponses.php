@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use app\Transformers\Transformer;
+use App\Transformers\Transformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;

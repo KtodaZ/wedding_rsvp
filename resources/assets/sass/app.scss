@@ -1,9 +1,161 @@
-
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,400,700");
 // Variables
 @import "variables";
-
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+// Animate.css
+@import "~vue2-animate/src/sass/vue2-animate.scss";
+
+.header-container {
+  @extend .container-fluid;
+  background-color: var(--backgroundColorPrimary);
+
+  @media only screen and (max-width: 480px) {
+    padding-top: 1rem;
+  }
+  @media only screen and (max-width: 767px) and (min-width: 480px) {
+    padding-top: 3rem;
+    text-align: center;
+  }
+  @media only screen and (min-width: 767px) and (max-width: 992px) {
+    text-align: center;
+    padding-top: 8rem;
+  }
+  @media only screen and (min-width: 992px) {
+    padding-top: 8rem;
+  }
+}
+
+.main-container {
+  @extend .container-fluid;
+  background-color: var(--backgroundColorSecondary);
+  height: 100vh;
+  padding: 0;
+}
+
+.body-area {
+  @extend .col-sm-offset-3;
+  @extend .col-sm-6;
+  @extend .col-xs-offset-1;
+  @extend .col-xs-10;
+
+}
+
+.Hint-text {
+  font-size: var(--fontSizeXSm);
+  font-weight: 400;
+
+  padding-top: 0.2rem;
+  padding-left: 0.2rem;
+}
+
+.Hint-clickable {
+  @extend .Hint-text;
+
+  cursor: pointer;
+}
+
+.Error-text {
+  @extend .Hint-text;
+  @extend .text-danger;
+}
+
+.Envelope-top-box {
+  @extend .text-center;
+
+  @media only screen and (min-width: 992px) {
+    display: none;
+  }
+}
+
+.Envelope-bottom-box {
+  @media only screen and (max-width: 992px) {
+    display: none;
+  }
+}
+
+.Envelope-top-img {
+  height: 15rem;
+  width: auto;
+
+  @media only screen and (max-width: 480px) {
+    height: 10rem;
+    margin-right: -13rem;
+    margin-bottom: -4rem
+  }
+  @media only screen and (max-width: 767px) and (min-width: 480px) {
+    height: 15rem;
+  }
+}
+
+.Envelope-bottom-img {
+  height: 20rem;
+  width: auto;
+  margin-top: -11rem;
+}
+
+.h1 {
+  @extend .h1;
+
+  font-weight: 900;
+}
+
+.h2 {
+  @extend .h2;
+
+  font-weight: 900;
+}
+
+.legend-header {
+  font-family: 'Raleway', sans-serif;
+  line-height: 3rem;
+
+  @media only screen and (min-width: 992px) {
+    margin-bottom: 3rem;
+  }
+}
+
+.Button {
+  @extend .btn;
+  @extend .btn-lg;
+
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  border-radius: 4em;
+  border-color: #3c4956;
+  border-width: 0.08rem;
+  color: #3c4956;
+
+  background-color: white;
+
+  &:hover,
+  &:focus {
+    border-color: #f4b813;
+    color: #f4b813;
+    outline: 0;
+  }
+
+  transition: all 0.2s;
+}
+
+.Choice-Button {
+  @extend .Button;
+  margin: 0 1rem 0 1rem;
+  padding-top: 0;
+  padding-bottom: 0.1rem;
+}
+
+.entry-text {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.fade-enter-active, .fade-leave-active{
+  transition: opacity .5s;
+  position: absolute;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}

@@ -1,6 +1,6 @@
 <?php namespace Tests\Unit\Models;
 
-use app\Transformers\AttendeeTransformer;
+use App\Transformers\AttendeeTransformer;
 use Tests\TestCase;
 
 class AttendeeTest extends TestCase

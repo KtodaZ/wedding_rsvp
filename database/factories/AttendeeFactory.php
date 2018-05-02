@@ -4,38 +4,32 @@ use App\Models\Attendee;
 use Faker\Generator as Faker;
 
 $factory->define(Attendee::class, function (Faker $faker) {
-    $maxPlusOnes = 2;
+    $maxPlusOnes = 4;
+
+    $numPlusOnesAllowed = $faker->numberBetween(0, $maxPlusOnes);
 
     // If replied, set attending
     $replied = $faker->boolean();
     if ($replied) {
-        $attending = $faker->boolean();
+        $numAttending = $faker->numberBetween(0, $numPlusOnesAllowed);
     } else {
-        $attending = false;
+        $numAttending = 0;
     }
 
-    $numPlusOnesAllowed = $faker->numberBetween(0, $maxPlusOnes);
-    if ($numPlusOnesAllowed) {
-        $numPlusOnes = $faker->numberBetween(0, $maxPlusOnes);
-    } else {
-        $numPlusOnes = 0;
-    }
+    $id = $faker->numberBetween(0, 10000);
 
-    for ($i = 0; $i < $numPlusOnes; $i++) {
-        /** @var Attendee $attendee */
-        $attendee = factory(Attendee::class)->create(['num_plus_ones_allowed' => 0]);
-        foreach ($attendee->getPlusOnes() as $plusOne) {
-            $plusOne->delete(); // we don't want a forever chain of plus ones being created
-        }
+    if ($numPlusOnesAllowed >= 2) {
+        $name = $faker->name . ' and ' . $faker->name;
+    } else {
+        $name = $faker->name;
     }
 
     return [
-        'fname'                 => $faker->firstName,
-        'lname'                 => $faker->lastName,
-        'email'                 => $faker->unique()->safeEmail,
-        'phone'                 => $faker->unique()->phoneNumber,
-        'attending'             => $attending,
+        'id'                    => $id,
+        'name'                  => $name,
+        'num_attending'         => $numAttending,
         'replied'               => $replied,
-        'num_plus_ones_allowed' => $numPlusOnesAllowed
+        'num_plus_ones_allowed' => $numPlusOnesAllowed,
+        'code' => 'placeholder'
     ];
 });

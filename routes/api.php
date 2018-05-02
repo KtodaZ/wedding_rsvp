@@ -12,7 +12,11 @@
 |
 */
 
-Route::prefix('rsvp')->group(function () {
+\Illuminate\Support\Facades\Route::prefix('rsvp')->group(function () {
     // Everything for the RSVP form
-    Route::resource('attendee', '\AppApp\Http\Controllers\Api\AttendeeController');
+    Route::get('code/{code}', '\App\Http\Controllers\Api\AttendeeController@code');
+    Route::put('code/{code}', '\App\Http\Controllers\Api\AttendeeController@edit');
 });
+
+
+//Route::resource('attendee', '\App\Http\Controllers\Api\AttendeeController', ['only' => ['show']]);

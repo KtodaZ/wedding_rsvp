@@ -1,6 +1,7 @@
-<?php namespace app\Transformers;
+<?php namespace App\Transformers;
 
 use App\Models\Attendee;
+use App\Models\EventContact;
 use Illuminate\Database\Eloquent\Model;
 
 class AttendeeTransformer extends AbstractTransformer
@@ -13,49 +14,24 @@ class AttendeeTransformer extends AbstractTransformer
      */
     public function transform(Model $model): array
     {
-        $plusOnes = $this->plusOnes($model);
-        return [
-            $this->transformAttendee($model),
-            'numPlusOnes' => count($plusOnes),
-            'plusOnes' => $this->plusOnes($model)
-        ];
+        return $this->transformAttendee($model);
+
     }
 
     /**
-     * @param Model|Attendee $model
+     * @param Attendee|Model $attendee
      *
      * @return array
      */
-    private function transformAttendee(Model $model)
+    private function transformAttendee(Model $attendee)
     {
         return [
-            'fname'              => $model->fname,
-            'lname'              => $model->lname,
-            'email'              => $model->email,
-            'phone'              => $model->phone,
-            'replied'            => $model->replied,
-            'attending'          => $model->attending,
-            'emailUpdates'       => $model->emailUpdates,
-            'textUpdates'        => $model->textUpdates,
-            'numPlusOnesAllowed' => $model->num_plus_ones_allowed,
-            'created_at'         => $model->created_at->toDateString(),
-            'updated_at'         => $model->updated_at->toDateString()
+            'name'               => $attendee->name,
+            'replied'            => $attendee->replied,
+            'numAttending'       => $attendee->num_attending,
+            'numPlusOnesAllowed' => $attendee->num_plus_ones_allowed,
+            'eventContacts'      => (new EventContactTransformer())->transformCollection($attendee->eventContacts),
         ];
     }
 
-    /**
-     * @param Model|Attendee $model
-     *
-     * @return array
-     */
-    private function plusOnes(Model $model): array
-    {
-        $returnArray = [];
-        foreach ($model->getPlusOnes() as $plusOne) {
-            $returnArray[] = [
-                $this->transformAttendee($plusOne)
-            ];
-        }
-        return $returnArray;
-    }
 }

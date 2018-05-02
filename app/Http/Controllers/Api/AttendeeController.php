@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Helpers\NameHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ModelResponses;
 use App\Http\Requests\Api\EditAttendee;
@@ -8,7 +7,7 @@ use App\Http\Requests\Api\StoreAttendee;
 use App\Http\Requests\Api\UpdateAttendee;
 use App\Models\Attendee;
 use App\Services\Local\Repositories\AttendeeRepository;
-use app\Transformers\AttendeeTransformer;
+use App\Transformers\AttendeeTransformer;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -17,7 +16,7 @@ use Illuminate\Http\JsonResponse;
  */
 class AttendeeController extends Controller
 {
-    use NameHelper, ModelResponses;
+    use  ModelResponses;
 
     /**
      * @var AttendeeRepository
@@ -34,30 +33,6 @@ class AttendeeController extends Controller
 
 
     /**
-     * @return JsonResponse
-     */
-    public function index()
-    {
-        return $this->response(Attendee::all(), new AttendeeTransformer());
-    }
-
-    /**
-     * @param StoreAttendee $request
-     *
-     * @return JsonResponse
-     * @throws \Throwable
-     */
-    public function store(StoreAttendee $request)
-    {
-        /** @var Attendee $attendee */
-        $attendee = (new Attendee)->firstOrCreate($this->splitNameReturnArray($request->get('name')));
-        $attendee = $request->applyRequestToAttendee($attendee);
-        $attendee->saveOrFail();
-
-        return $this->createdResponse($attendee, new AttendeeTransformer());
-    }
-
-    /**
      * @param Attendee $attendee
      *
      * @return JsonResponse
@@ -68,47 +43,37 @@ class AttendeeController extends Controller
     }
 
     /**
-     * @param UpdateAttendee $request
-     * @param Attendee $attendee
+     * @param EditAttendee $request
+     * @param string $code
      *
      * @return JsonResponse
      * @throws \Throwable
      */
-    public function update(UpdateAttendee $request, Attendee $attendee)
+    public function edit(EditAttendee $request, string $code)
     {
+        \Log::debug('Edit request received with code ' . $code, $request->toArray());
+        $attendee = $this->getAttendeeByCode($code);
+
         $attendee = $request->applyRequestToAttendee($attendee);
         $attendee->saveOrFail();
+        $request->applyRequestToEventContacts($attendee);
 
         return $this->response($attendee, new AttendeeTransformer());
     }
 
-    /**
-     * @param EditAttendee $request
-     * @param Attendee $attendee
-     *
-     * @return JsonResponse
-     * @throws \Throwable
-     */
-    public function edit(EditAttendee $request, Attendee $attendee)
+    public function code(string $code)
     {
-        $attendee = $request->applyRequestToAttendee($attendee); // Apply default
-        $attendee->saveOrFail();
-
-        return $this->response($attendee, new AttendeeTransformer());
+        return $this->response($this->getAttendeeByCode($code), new AttendeeTransformer);
     }
 
     /**
-     * @param Attendee $attendee
+     * @param string $code
      *
-     * @return JsonResponse
-     * @throws \Exception
+     * @return \Illuminate\Database\Eloquent\Model|null|static|Attendee
      */
-    public function destroy(Attendee $attendee)
+    private function getAttendeeByCode(string $code)
     {
-        $attendee->delete();
-
-        return JsonResponse::create(['result' => 'success']);
+        return Attendee::whereCode(strtoupper($code))->firstOrFail();
     }
-
 
 }

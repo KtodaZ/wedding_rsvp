@@ -5,6 +5,7 @@ use App\Models\Attendee;
 
 class AttendeesTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -12,6 +13,10 @@ class AttendeesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Attendee::class, 10)->create();
+        Schema::disableForeignKeyConstraints();
+
+        factory(Attendee::class, 100)->create();
+
+        Schema::enableForeignKeyConstraints();
     }
 }

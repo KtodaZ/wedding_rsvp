@@ -1,0 +1,91 @@
+/*@import url('https://fonts.googleapis.com/css?family=Dosis');*/
+
+:root {
+    /* generic */
+    --gutterSm: 0.4rem;
+    --gutterMd: 0.8rem;
+    --gutterLg: 1.6rem;
+    --gutterXl: 2.4rem;
+    --gutterXx: 7.2rem;
+    --colorPrimary400: #E3E3E3;
+    --colorPrimary600: #5ab5a2;
+    --colorPrimary800: #E3E3E3;
+    --backgroundColorPrimary: #FFFFFF;
+    --backgroundColorSecondary: #6BC8B8;
+    --fontFamily: 'Montserrat', sans-serif;
+    --fontSizeXSm: 0.8rem;
+    --fontSizeSm: 1.0rem;
+    --fontSizeMd: 1.4rem;
+    --fontSizeLg: 1.9rem;
+    --fontSizeXl: 2.3rem;
+    --fontSizeXx: 3.3rem;
+    --lineHeightSm: 1.1;
+    --lineHeightMd: 1.8;
+    --transitionDuration: 500ms;
+    --transitionTF: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    /* floated labels */
+    --inputPaddingV: var(--gutterMd);
+    --inputPaddingH: var(--gutterLg);
+    --inputFontSize: var(--fontSizeSm);
+    --labelFontSize: var(--fontSizeMd);
+    --inputLineHeight: var(--lineHeightMd);
+    --labelScaleFactor: 0.8;
+    --labelDefaultPosY: 50%;
+    --labelTransformedPosY: calc(
+            (var(--labelDefaultPosY)) -
+            (var(--inputPaddingV) * var(--labelScaleFactor)) -
+            (var(--inputFontSize) * var(--inputLineHeight))
+    );
+    --inputTransitionDuration: var(--transitionDuration);
+    --inputTransitionTF: var(--transitionTF);
+}
+
+*,
+*::before,
+*::after,
+html {
+    font-size: 1rem;
+}
+
+.Input {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.Input-text {
+    display: block;
+    margin: 0;
+    color: inherit;
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--inputFontSize);
+    font-weight: 100;
+    line-height: var(--inputLineHeight);
+    border: none;
+    border-radius: 0.4rem;
+    transition: box-shadow var(--transitionDuration);
+    padding: var(--inputPaddingV) var(--inputPaddingH);
+}
+
+.Input-text:focus {
+    outline: none;
+    box-shadow: 0.3rem 0.3rem 1rem var(--colorPrimary600);
+}
+
+.Form-entry {
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--labelFontSize);
+    font-weight: bolder;
+    line-height: var(--inputLineHeight);
+    color: black;
+}
+
+.Input-container {
+    padding: 1rem 1rem 0 1rem;
+}
+
+.Input-group {
+
+}

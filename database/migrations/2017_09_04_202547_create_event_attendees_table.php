@@ -16,18 +16,18 @@ class CreateEventAttendeesTable extends Migration
     {
         Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fname');
-            $table->string('lname');
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->boolean('attending')->default(false);
+            $table->string('name');
+            $table->string('code');
+            $table->unsignedInteger('num_attending')->default(0);
+            $table->unsignedInteger('num_plus_ones_allowed')->default(0);
             $table->boolean('replied')->default(false);
-            $table->boolean('email_updates')->default(false);
-            $table->boolean('text_updates')->default(false);
-            $table->integer('num_plus_ones_allowed')->default(0);
 
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
+            $table->unique('code');
+
+            $table->softDeletes();
         });
     }
 

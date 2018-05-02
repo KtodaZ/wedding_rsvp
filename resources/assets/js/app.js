@@ -15,6 +15,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('rsvp', require('./components/RSVP.vue'));
+Vue.component('rsvp-form', require('./components/RSVP-form.vue'));
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({

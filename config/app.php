@@ -180,6 +180,10 @@ return [
         // IDE Helper
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+        /**
+         * Generator Service Providers
+         */
+        \App\Providers\CodeGeneratorServiceProvider::class,
     ],
 
     /*

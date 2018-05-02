@@ -1,8 +1,10 @@
 <?php namespace App\Http\Requests\Api;
 
-use App\Helpers\NameHelper;
 use App\Models\Attendee;
+use App\Models\EventContact;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * Class UpdateAttendee
@@ -10,7 +12,6 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class EditAttendee extends FormRequest
 {
-    use NameHelper;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -30,16 +31,8 @@ class EditAttendee extends FormRequest
     public function rules()
     {
         return [
-            'attending'              => 'boolean|required',
-            'email'                  => 'email',
-            'phone'                  => 'digits:10',
-            'emailUpdates'           => 'boolean',
-            'textUpdates'            => 'boolean',
-            'plusOne.*.name'         => 'name',
-            'plusOne.*.email'        => 'email',
-            'plusOne.*.phone'        => 'phone',
-            'plusOne.*.emailUpdates' => 'boolean',
-            'plusOne.*.textUpdates'  => 'boolean'
+            'numAttending'  => 'required|numeric',
+            'eventContacts' => 'array'
         ];
     }
 
@@ -50,15 +43,30 @@ class EditAttendee extends FormRequest
      */
     public function applyRequestToAttendee(Attendee $attendee)
     {
-        $attendee->email = $this->get('email');
-        $attendee->phone = $this->get('phone');
-        $attendee->emailUpdates = $this->get('emailUpdates');
-        $attendee->textUpdates = $this->get('textUpdates');
-        $attendee->attending = $this->get('attending');
-        $attendee->replied = $this->get('replied');
-        $attendee->num_plus_ones_allowed = $this->get('numPlusOnesAllowed');
+        $attendee->num_attending = $this->get('numAttending');
+        $attendee->replied = true;
         return $attendee;
     }
 
-
+    /**
+     * @param Attendee $attendee
+     *
+     * @throws \Throwable
+     */
+    public function applyRequestToEventContacts(Attendee $attendee)
+    {
+        $attendeeId = $attendee->id;
+        \DB::transaction(function () use ($attendeeId) {
+            EventContact::whereAttendeeId($attendeeId)->delete();
+            foreach ($this->get('eventContacts') as $contact) {
+                $email = Arr::get($contact, 'email');
+                if ($email) {
+                    $eventContact = new EventContact();
+                    $eventContact->attendee_id = $attendeeId;
+                    $eventContact->email = $email;
+                    $eventContact->save();
+                }
+            }
+        });
+    }
 }

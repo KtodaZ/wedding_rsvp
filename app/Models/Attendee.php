@@ -2,94 +2,94 @@
 
 namespace App\Models;
 
-use App\Helpers\NameHelper;
+use App\Contracts\Generators\CodeGenerator;
+use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
-
 
 
 /**
  * App\Models\Attendee
  *
  * @property int $id
- * @property string $fname
- * @property string $lname
- * @property string|null $email
- * @property string|null $phone
- * @property int $attending
- * @property int $replied
- * @property int $emailUpdates
- * @property int $textUpdates
+ * @property string $name
+ * @property string $code
+ * @property int $num_attending
  * @property int $num_plus_ones_allowed
+ * @property bool $replied
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\AttendeePlusOne[] $attendeePlusOnes
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereAttending($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EventContact[] $eventContacts
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereEmailUpdates($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereFname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereLname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereName($name)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereNumAttending($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereNumPlusOnesAllowed($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereReplied($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereTextUpdates($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $deleted_at
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Attendee onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Attendee withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Attendee withoutTrashed()
  */
 class Attendee extends Model
 {
-    use NameHelper;
+    use SoftDeletes;
+
+    const CODE_NUMBER_LENGTH = 2;
 
     protected $fillable = [
-        'fname',
-        'lname',
-        'email',
-        'phone',
-        'address',
-        'emailUpdates',
-        'textUpdates',
-        'attending',
+        'num_attending',
         'replied',
-        'num_plus_ones_allowed'
     ];
 
     /**
-     * @return HasMany
-     */
-    public function attendeePlusOnes(): HasMany
-    {
-        return $this->hasMany(AttendeePlusOne::class);
-    }
-
-    /**
-     * @return Collection|Attendee[]
-     */
-    public function getPlusOnes(): Collection
-    {
-        $attendee = $this;
-        return (new Attendee)->whereIn('id', function ($query) use ($attendee) {
-            /** @var Builder $query */
-            $query->select('plus_one_attendee_id')
-                ->from(with(new AttendeePlusOne())->getTable())
-                ->where('id', $attendee->id);
-        })->get();
-    }
-
-    /**
-     * @param Builder $query
-     * @param string $name
+     * The attributes that should be cast to native types.
      *
-     * @return Attendee|\Illuminate\Database\Eloquent\Builder
+     * @var array
      */
-    public function scopeWhereName($query, string $name)
+    protected $casts = [
+        'replied'      => 'bool',
+    ];
+
+    protected static function boot()
     {
-        list($fname, $lname) = $this->splitName($name);
-        return $query->where('fname', $fname)->where('lname', $lname);
+        parent::boot();
+
+        static::created(function ($model) {
+            /** @var Attendee $model */
+            $model->generateCode();
+        });
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function eventContacts()
+    {
+        return $this->hasMany(EventContact::class);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    private function generateCode()
+    {
+        /** @var CodeGenerator $codeGenerator */
+        $codeGenerator = \App::make(CodeGenerator::class);
+        do {
+            $code = $codeGenerator->generate(self::CODE_NUMBER_LENGTH);
+        } while (Attendee::whereCode($code)->first());
+        $this->code = $code;
+        $this->save();
     }
 
 }

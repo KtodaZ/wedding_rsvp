@@ -1,4 +1,4 @@
-<?php namespace app\Transformers;
+<?php namespace App\Transformers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -16,7 +16,7 @@ abstract class AbstractTransformer implements Transformer
      *
      * @return array
      */
-    abstract public function transform(Model $model): array;
+    abstract public function transform(Model $model);
 
     /**
      * @param \Illuminate\Support\Collection $collection

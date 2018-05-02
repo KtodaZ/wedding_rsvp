@@ -1,4 +1,4 @@
-<?php namespace app\Transformers;
+<?php namespace App\Transformers;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,6 @@ interface Transformer
      *
      * @return array
      */
-    public function transform(Model $model) : array;
+    public function transform(Model $model);
 
 }
