@@ -27,7 +27,7 @@
                             <div class="h2" v-if="attendee.replied && attending">
                                 <span class="h2">It looks like you've already RSVP'd! We're holding </span>
                                 <span class="h2" style="color: #2C57F6;">{{ attendee.numAttending }}</span>
-                                <span v-if="attendee.numAttending === 1" class="h1"> seat for you.</span>
+                                <span v-if="attendee.numAttending === 1" class="h2"> seat for you.</span>
                                 <span v-else class="h2"> seats for you.</span>
                                 <span class="h2">You can edit your notification preferences now if you'd like.</span>
                             </div>
