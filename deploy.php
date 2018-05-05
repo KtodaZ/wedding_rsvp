@@ -40,5 +40,5 @@ after('deploy:failed', 'deploy:unlock');
 
 before('deploy:symlink', 'artisan:migrate');
 
-before('deploy:symlink', 'build');
+after('artisan:migrate', 'build');
 
