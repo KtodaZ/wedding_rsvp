@@ -9,18 +9,30 @@
                             <div class="legend-header h1">
                                 <span class="h1">Awesome, {{attendee.name}}! You're all done!</span>
                             </div>
-                            <div class="legend-header h1">
-                                <span class="h1">We've reserved </span>
-                                <span class="h1" style="color: #2C57F6;">{{ attendee.numAttending }}</span>
-                                <span v-if="attendee.numAttending === 1" class="h1"> seat for you.</span>
-                                <span v-else class="h1"> seats for you.</span>
+                            <div v-if="attending">
+                                <div class="legend-header h1">
+                                    <span class="h1">We've reserved </span>
+                                    <span class="h1" style="color: #2C57F6;">{{ attendee.numAttending }}</span>
+                                    <span v-if="attendee.numAttending === 1" class="h1"> seat for you.</span>
+                                    <span v-else class="h1"> seats for you.</span>
+                                </div>
+                            </div>
+                            <div v-else class="legend-header">
+                                <span class="h2">We're sorry that you can't make it! We'll miss you!</span>
                             </div>
                         </div>
-                        <div v-else-if="attendee.name" key="codeSuccessHeader">
-                            <div class="legend-header h1">Welcome, {{attendee.name}}!
+                        <div v-else-if="attendee.name" key="codeSuccessHeader" class="legend-header">
+                            <div class="h1">Welcome, {{attendee.name}}!
                             </div>
-                            <div class="Error-text" v-if="attendee.replied">It looks like you've already RSVP'd, but you
-                                can edit your notification preferences now if you'd like.
+                            <div class="h2" v-if="attendee.replied && attending">
+                                <span class="h2">It looks like you've already RSVP'd! We're holding </span>
+                                <span class="h2" style="color: #2C57F6;">{{ attendee.numAttending }}</span>
+                                <span v-if="attendee.numAttending === 1" class="h1"> seat for you.</span>
+                                <span v-else class="h2"> seats for you.</span>
+                                <span class="h2">You can edit your notification preferences now if you'd like.</span>
+                            </div>
+                            <div class="h2" v-else-if="attendee.replied && !attending">It looks like you've already
+                                RSVP'd. We're sorry you can't make it!
                             </div>
                         </div>
                         <div v-else-if="!attendee.name" key="noCodeHeader">
@@ -57,7 +69,8 @@
                                                     YES. Let's party!
                                                 </label>
                                                 <label class="entry-text col-md-6 col-xs-12">
-                                                    <input type="radio" id="noRadio" :value="false" v-model="attending">
+                                                    <input type="radio" id="noRadio" :value="false" v-model="attending"
+                                                           v-on:click="setNumAttending(0)">
                                                     NO.
                                                     Will be
                                                     at home watching Netflix.
@@ -223,7 +236,7 @@
             handleSuccessfulResponse(data) {
                 this.clearErrors();
                 this.attendee = data;
-                this.attending = (this.attendee.numAttending > 0) ? true : null;
+                this.setAttending();
                 if (this.attendee.eventContacts.length === 0) {
                     this.attendee.eventContacts.push({email: ''});
                 }
@@ -247,6 +260,9 @@
             },
             removeContact(n) {
                 this.attendee.eventContacts.splice(n, 1);
+            },
+            setAttending() {
+                this.attending = (this.attendee.numAttending > 0) ? true : null;
             }
         }
     }
