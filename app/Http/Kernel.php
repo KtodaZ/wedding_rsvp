@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAuthorization;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -65,7 +66,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => Authenticate::class,
+        'auth'       => CheckAuthorization::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'bindings'   => SubstituteBindings::class,
         'can'        => Authorize::class,

@@ -99,4 +99,6 @@ return [
         ],
     ],
 
+    'ApiKey' => env('API_KEY')
+
 ];

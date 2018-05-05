@@ -27,6 +27,7 @@ class AttendeeTransformer extends AbstractTransformer
     {
         return [
             'name'               => $attendee->name,
+            'code'               => $attendee->code,
             'replied'            => $attendee->replied,
             'numAttending'       => $attendee->num_attending,
             'numPlusOnesAllowed' => $attendee->num_plus_ones_allowed,

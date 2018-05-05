@@ -47,6 +47,8 @@ class Attendee extends Model
     const CODE_NUMBER_LENGTH = 2;
 
     protected $fillable = [
+        'name',
+        'num_plus_ones_allowed',
         'num_attending',
         'replied',
     ];

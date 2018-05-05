@@ -19,4 +19,5 @@
 });
 
 
-//Route::resource('attendee', '\App\Http\Controllers\Api\AttendeeController', ['only' => ['show']]);
+Route::resource('attendee', '\App\Http\Controllers\Api\AttendeeController', ['only' => ['show', 'store']])
+    ->middleware('auth');

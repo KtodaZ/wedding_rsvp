@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ModelResponses;
+use App\Http\Requests\Api\CreateAttendee;
 use App\Http\Requests\Api\EditAttendee;
 use App\Http\Requests\Api\StoreAttendee;
 use App\Http\Requests\Api\UpdateAttendee;
@@ -40,6 +41,17 @@ class AttendeeController extends Controller
     public function show(Attendee $attendee)
     {
         return $this->response($attendee, new AttendeeTransformer());
+    }
+
+    /**
+     * @param CreateAttendee $request
+     *
+     * @return JsonResponse
+     */
+    public function store(CreateAttendee $request) {
+        $attendee = $request->applyRequestToAttendee();
+        $attendee->save();
+        return $this->createdResponse($attendee, new AttendeeTransformer());
     }
 
     /**
