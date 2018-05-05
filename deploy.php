@@ -30,7 +30,7 @@ host('159.65.105.249')
 // Tasks
 
 task('build', function () {
-    run('cd {{release_path}});');
+    run('cd {{release_path}})');
     run('composer install');
     run('rm -rf node_modules');
     run('rm package-lock.json yarn.lock');
