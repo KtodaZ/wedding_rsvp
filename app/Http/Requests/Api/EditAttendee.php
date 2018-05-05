@@ -32,7 +32,11 @@ class EditAttendee extends FormRequest
     {
         return [
             'numAttending'  => 'required|numeric',
-            'eventContacts' => 'array'
+            'eventContacts' => [
+              [
+                  'email' => 'email|required'
+              ]
+            ]
         ];
     }
 
