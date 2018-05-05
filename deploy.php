@@ -30,13 +30,7 @@ host('159.65.105.249')
 // Tasks
 
 task('build', function () {
-    run('cd {{release_path}}');
-    run('composer install');
-    run('rm -rf node_modules');
-    run('rm package-lock.json yarn.lock');
-    run('npm cache clear --force');
-    run('npm install');
-    run('npm run production');
+    run('cd {{release_path}} && composer install && rm -rf node_modules && rm package-lock.json yarn.lock && npm cache clear --force && npm install && npm run production');
 });
 
 // [Optional] if deploy fails automatically unlock.
