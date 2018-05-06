@@ -125,7 +125,7 @@
                                                     </transition-group>
                                                     <div>
                                                         <span class="Hint-clickable"
-                                                              v-on:click="attendee.eventContacts.push({ email: '' })">+ Add Another</span>
+                                                              v-on:click="attendee.eventContacts.push({ email: '' })">+ Add Another Email</span>
                                                     </div>
                                                 </div>
                                             </div>
