@@ -100,7 +100,8 @@
                                     <transition name="fadeRight">
                                         <div class="form-group" v-if="attendee.numAttending > 0 && attending">
                                             <div class="Input">
-                                                <div class="Form-entry">Enter your email to receive updates</div>
+                                                <div class="Form-entry">Enter your email to receive updates (optional)
+                                                </div>
                                                 <div class="Input-container">
                                                     <transition-group name="fadeRight" tag="p" leave-active-class="">
                                                         <div v-for="(contact, index) in attendee.eventContacts"
