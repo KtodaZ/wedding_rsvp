@@ -8,6 +8,7 @@ use App\Http\Requests\Api\StoreAttendee;
 use App\Http\Requests\Api\UpdateAttendee;
 use App\Models\Attendee;
 use App\Services\Local\Repositories\AttendeeRepository;
+use App\Services\Local\Services\SendRsvpMailService;
 use App\Transformers\AttendeeTransformer;
 use Illuminate\Http\JsonResponse;
 
@@ -69,6 +70,8 @@ class AttendeeController extends Controller
         $attendee = $request->applyRequestToAttendee($attendee);
         $attendee->saveOrFail();
         $request->applyRequestToEventContacts($attendee);
+
+        SendRsvpMailService::sendMail($attendee);
 
         return $this->response($attendee, new AttendeeTransformer());
     }
