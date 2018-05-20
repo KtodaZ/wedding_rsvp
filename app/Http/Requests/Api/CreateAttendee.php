@@ -45,6 +45,8 @@ class CreateAttendee extends FormRequest
     {
         $attendee = new Attendee();
         $attendee->name = $this->get('name');
+        $attendee->replied = false;
+        $attendee->num_attending = false;
         $attendee->num_plus_ones_allowed = $this->get('plusOnes');
         $attendee->code = 'placeHolder';
         return $attendee;
