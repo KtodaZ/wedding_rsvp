@@ -3,6 +3,7 @@
 use App\Mail\RsvpThankYouMailable;
 use App\Models\Attendee;
 use App\Transformers\AttendeeTransformer;
+use Illuminate\Mail\Message;
 
 class SendRsvpMailService
 {
@@ -26,8 +27,10 @@ class SendRsvpMailService
 
         try {
             $transformer = new AttendeeTransformer();
-            \Mail::raw('New Guest RSVPd: <br>' . json_encode($transformer->transform($attendee)), function ($message) {
+            \Mail::raw('New Guest RSVPd: ' . json_encode($transformer->transform($attendee)), function ($message) use ($attendee) {
+                /**@var Message $message */
                 $message->to('szomba.ceane@gmail.com');
+                $message->subject('New Guest RSVPd: ' . $attendee->name);
             });
         } catch (\Exception $e) {
             \Log::critical('Error Sending email. ' . $e->__toString());
