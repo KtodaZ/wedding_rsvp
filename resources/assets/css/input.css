@@ -74,7 +74,7 @@ html {
     box-shadow: 0.3rem 0.3rem 1rem var(--colorPrimary600);
 }
 
-.Form-entry {
+.Form-Header {
     font-family: 'Montserrat', sans-serif;
     font-size: var(--labelFontSize);
     font-weight: bolder;

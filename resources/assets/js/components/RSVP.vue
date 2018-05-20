@@ -29,7 +29,6 @@
                                 <span class="h2" style="color: #2C57F6;">{{ attendee.numAttending }}</span>
                                 <span v-if="attendee.numAttending === 1" class="h2"> seat for you.</span>
                                 <span v-else class="h2"> seats for you.</span>
-                                <span class="h2">You can edit your notification preferences now if you'd like.</span>
                             </div>
                             <div class="h2" v-else-if="attendee.replied && !attending">It looks like you've already
                                 RSVP'd. We're sorry you can't make it!
@@ -51,17 +50,54 @@
             <div class="body-area">
 
                 <transition name="fadeRightBig" mode="out-in" leave-active-class="fadeOutLeft">
-                    <div v-if="doneWithRsvp">
-
-                    </div>
-
-                    <div id="rsvp-form" v-else-if="attendee.name" key="rsvpForm">
+                    <div id="rsvp-form" v-if="attendee.name" key="rsvpForm">
                         <form class="form-horizontal" method="post" @submit.prevent="onFormSubmit">
                             <fieldset>
                                 <div>
+                                    <transition name="fadeRight">
+                                        <div class="form-group" v-if="attending && attendee.replied">
+                                            <div class="Input">
+                                                <div class="Form-Header"> Here are some links you might find useful:
+                                                </div>
+                                                <div class="Input-container">
+                                                    <!--Aligned same way the questions are aligned-->
+                                                    <p class="entry-text"> We have reserved a block of rooms at the
+                                                        Residence Inn Marriott at Capitol Park.
+                                                        <a class="link" target="_blank" href="https://bit.ly/2LhKkVB">Click
+                                                            here</a> to book with our reduced rate! </p>
+
+                                                    <p class="entry-text"> Noelle and Kyle are registered at <a
+                                                            class="link" target="_blank"
+                                                            href="https://www.amazon.com/wedding/share/szombathyceane">Amazon</a>
+                                                        and <a class="link" target="_blank"
+                                                               href="https://www.crateandbarrel.com/gift-registry/noelle-ceane-and-kyle-szombathy/r5840478">Crate
+                                                            & Barrel</a>,
+                                                        or you can help by donating to their <a class="link"
+                                                                                                target="_blank"
+                                                                                                href="https://www.pinterest.com/szombaceane/ceane-szombathy-newlywed-fund/">Newlywed
+                                                            Fund</a>.</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="Input">
+                                                <div class="Form-Header">Find your way to the venue:</div>
+                                                <div class="row Input-container">
+                                                    <div class="col-xs-12 col-lg-8 col-lg-offset-2">
+                                                        <div class="embed-responsive embed-responsive-4by3">
+                                                            <iframe class="embed-responsive-item"
+                                                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3 !1d3119.6682520664313!2d-121.48556418367403!3d38.564456579623375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ad0e6827ed9eb%3A0xc13f4271c33deb4c!2sVizcaya!5e0!3m2!1sen!2sus!4v1526836010023"
+                                                                    allowfullscreen></iframe>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </transition>
+
                                     <div class="form-group" v-if="!attendee.replied">
                                         <div class="Input">
-                                            <div class="Form-entry">Will you be attending?</div>
+                                            <div class="Form-Header">Will you be attending?</div>
                                             <div class="Input-container">
                                                 <label class="entry-text col-md-6 col-xs-12">
                                                     <input type="radio" id="yesRadio" :value="true" v-model="attending"
@@ -82,7 +118,7 @@
                                     <transition name="fadeRight">
                                         <div class="form-group" v-if="attending && !attendee.replied">
                                             <div class="Input">
-                                                <div class="Form-entry">How many total in your party?</div>
+                                                <div class="Form-Header">How many total in your party?</div>
                                                 <div class="Input-container">
                                                     <button type="button" class="Choice-Button"
                                                             v-for="n in (attendee.numPlusOnesAllowed + 1)"
@@ -100,7 +136,11 @@
                                     <transition name="fadeRight">
                                         <div class="form-group" v-if="attendee.numAttending > 0 && attending">
                                             <div class="Input">
-                                                <div class="Form-entry">Enter your email to receive updates (optional)
+                                                <div v-if="attendee.replied && attending" class="Form-Header">Edit your
+                                                    email preferences? Here's what we have for you:
+                                                </div>
+                                                <div v-else class="Form-Header">Enter one or more emails to receive
+                                                    updates (optional)
                                                 </div>
                                                 <div class="Input-container">
                                                     <transition-group name="fadeRight" tag="p" leave-active-class="">
@@ -154,7 +194,7 @@
                             <div class="col-md-8" style="padding: 0;">
                                 <div class="form-group">
                                     <div class="Input">
-                                        <label class="Form-entry" for="code">Enter your code:</label>
+                                        <label class="Form-Header" for="code">Enter your code:</label>
                                         <input id="code"
                                                v-model="code"
                                                type="text"
