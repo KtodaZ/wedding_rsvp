@@ -54,7 +54,7 @@
                         <form class="form-horizontal" method="post" @submit.prevent="onFormSubmit">
                             <fieldset>
                                 <div>
-                                    <transition name="fadeRight">
+                                    <transition name="fadeRight" mode="out-in" leave-active-class="fadeOutLeft">
                                         <div class="form-group" v-if="attending && attendee.replied">
                                             <div class="Input">
                                                 <div class="Form-Header"> Here are some links you might find useful:
@@ -115,7 +115,7 @@
                                         </div>
                                     </div>
 
-                                    <transition name="fadeRight">
+                                    <transition name="fadeRight" mode="out-in" leave-active-class="fadeOutLeft">
                                         <div class="form-group" v-if="attending && !attendee.replied">
                                             <div class="Input">
                                                 <div class="Form-Header">How many total in your party?</div>
@@ -133,7 +133,7 @@
                                     </transition>
 
 
-                                    <transition name="fadeRight">
+                                    <transition name="fadeRight" mode="out-in" leave-active-class="fadeOutLeft">
                                         <div class="form-group" v-if="attendee.numAttending > 0 && attending">
                                             <div class="Input">
                                                 <div v-if="attendee.replied && attending" class="Form-Header">Edit your
