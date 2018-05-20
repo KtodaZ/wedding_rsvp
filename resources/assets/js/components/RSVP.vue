@@ -64,7 +64,7 @@
                                                     <p class="entry-text"> We have reserved a block of rooms at the
                                                         Residence Inn Marriott at Capitol Park.
                                                         <a class="link" target="_blank" href="https://bit.ly/2LhKkVB">Click
-                                                            here</a> to book with our reduced rate! </p>
+                                                            here</a> to book with our reduced rate before July 5th! </p>
 
                                                     <p class="entry-text"> Noelle and Kyle are registered at <a
                                                             class="link" target="_blank"
