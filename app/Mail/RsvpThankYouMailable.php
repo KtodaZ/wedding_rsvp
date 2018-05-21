@@ -33,7 +33,7 @@ class RsvpThankYouMailable extends Mailable
      */
     public function build()
     {
-        return $this->from('szomba.ceane@gmail.com')
+        return $this->from('kyle@szombathy.com')
             ->subject('Thank you for RSVP\'ing')
             ->markdown('emails.rsvp.thankyou')->with([
                 'numAttending' => $this->attendee->num_attending,
