@@ -48,7 +48,7 @@ html {
     font-size: 1rem;
 }
 
-.Input {
+.Form {
     position: relative;
     margin-top: 1rem;
     margin-bottom: 0.3rem;
@@ -82,7 +82,7 @@ html {
     color: black;
 }
 
-.Input-container {
+.Form-container {
     padding: 1rem 1rem 0 1rem;
 }
 

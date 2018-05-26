@@ -56,17 +56,20 @@
                                 <div>
                                     <transition name="fadeRight" mode="out-in" leave-active-class="fadeOutLeft">
                                         <div class="form-group" v-if="attending && attendee.replied">
-                                            <div class="Input">
+                                            <div class="Form">
                                                 <div class="Form-Header"> Here are some links you might find useful:
                                                 </div>
-                                                <div class="Input-container">
+                                                <div class="Form-container">
+                                                    <p v-if="attendee.eventContacts.length === 0 || (attendee.eventContacts.length === 1 && !attendee.eventContacts[0]['email'])" class="norm-text">P.S. - We will email you this information if you enter your email (at the bottom of this page).</p>
+                                                    <p v-else class="norm-text"> P.S. - We sent you this list to your email.</p>
+
                                                     <!--Aligned same way the questions are aligned-->
-                                                    <p class="entry-text"> We have reserved a block of rooms at the
+                                                    <p class="norm-text"> We have reserved a block of rooms at the
                                                         Residence Inn Marriott at Capitol Park.
                                                         <a class="link" target="_blank" href="https://bit.ly/2LhKkVB">Click
                                                             here</a> to book with our reduced rate before July 5th! </p>
 
-                                                    <p class="entry-text"> Noelle and Kyle are registered at <a
+                                                    <p class="norm-text"> Noelle and Kyle are registered at <a
                                                             class="link" target="_blank"
                                                             href="https://www.amazon.com/wedding/share/szombathyceane">Amazon</a>
                                                         and <a class="link" target="_blank"
@@ -79,9 +82,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="Input">
+                                            <div class="Form">
                                                 <div class="Form-Header">Find your way to the venue:</div>
-                                                <div class="row Input-container">
+                                                <div class="row Form-container">
                                                     <div class="col-xs-12 col-lg-8 col-lg-offset-2">
                                                         <div class="embed-responsive embed-responsive-4by3">
                                                             <iframe class="embed-responsive-item"
@@ -96,15 +99,15 @@
                                     </transition>
 
                                     <div class="form-group" v-if="!attendee.replied">
-                                        <div class="Input">
+                                        <div class="Form">
                                             <div class="Form-Header">Will you be attending?</div>
-                                            <div class="Input-container">
-                                                <label class="entry-text col-md-6 col-xs-12">
+                                            <div class="Form-container">
+                                                <label class="norm-text col-md-6 col-xs-12">
                                                     <input type="radio" id="yesRadio" :value="true" v-model="attending"
                                                            v-on:click="setNumAttendingBtnColor()">
                                                     YES. Let's party!
                                                 </label>
-                                                <label class="entry-text col-md-6 col-xs-12">
+                                                <label class="norm-text col-md-6 col-xs-12">
                                                     <input type="radio" id="noRadio" :value="false" v-model="attending"
                                                            v-on:click="setNumAttending(0)">
                                                     NO.
@@ -117,9 +120,9 @@
 
                                     <transition name="fadeRight" mode="out-in" leave-active-class="fadeOutLeft">
                                         <div class="form-group" v-if="attending && !attendee.replied">
-                                            <div class="Input">
+                                            <div class="Form">
                                                 <div class="Form-Header">How many total in your party?</div>
-                                                <div class="Input-container">
+                                                <div class="Form-container">
                                                     <button type="button" class="Choice-Button"
                                                             v-for="n in (attendee.numPlusOnesAllowed + 1)"
                                                             v-on:click="setNumAttending(n)"
@@ -135,14 +138,14 @@
 
                                     <transition name="fadeRight" mode="out-in" leave-active-class="fadeOutLeft">
                                         <div class="form-group" v-if="attendee.numAttending > 0 && attending">
-                                            <div class="Input">
+                                            <div class="Form">
                                                 <div v-if="attendee.replied && attending" class="Form-Header">Edit your
                                                     email preferences? Here's what we have for you:
                                                 </div>
                                                 <div v-else class="Form-Header">Enter one or more emails to receive
                                                     updates (optional)
                                                 </div>
-                                                <div class="Input-container">
+                                                <div class="Form-container">
                                                     <transition-group name="fadeRight" tag="p" leave-active-class="">
                                                         <div v-for="(contact, index) in attendee.eventContacts"
                                                              :key="index">
@@ -193,7 +196,7 @@
 
                             <div class="col-md-8" style="padding: 0;">
                                 <div class="form-group">
-                                    <div class="Input">
+                                    <div class="Form">
                                         <label class="Form-Header" for="code">Enter your code:</label>
                                         <input id="code"
                                                v-model="code"
@@ -304,6 +307,9 @@
             },
             setAttending() {
                 this.attending = (this.attendee.numAttending > 0) ? true : null;
+            },
+            clog(obj) {
+                console.log(obj);
             }
         }
     }
