@@ -61,7 +61,7 @@
                                                 </div>
                                                 <div class="Form-container">
                                                     <p v-if="attendee.eventContacts.length === 0 || (attendee.eventContacts.length === 1 && !attendee.eventContacts[0]['email'])" class="norm-text">P.S. - We will email you this information if you enter your email (at the bottom of this page).</p>
-                                                    <p v-else class="norm-text"> P.S. - We sent you this list to your email.</p>
+                                                    <p v-else class="norm-text"> P.S. - We sent you this list to your email. Please check your spam folder.</p>
 
                                                     <!--Aligned same way the questions are aligned-->
                                                     <p class="norm-text"> We have reserved a block of rooms at the
