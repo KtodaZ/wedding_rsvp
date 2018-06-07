@@ -104,7 +104,7 @@
                                             <div class="Form-container">
                                                 <label class="norm-text col-md-6 col-xs-12">
                                                     <input type="radio" id="yesRadio" :value="true" v-model="attending"
-                                                           v-on:click="setNumAttendingBtnColor()">
+                                                           v-on:click="this.setNumAttendingBtnColor">
                                                     YES. Let's party!
                                                 </label>
                                                 <label class="norm-text col-md-6 col-xs-12">
@@ -178,7 +178,7 @@
                                     <div class="form-group">
                                         <div class="col-md-12 text-right">
                                             <transition name="fadeRight">
-                                                <button v-if="attendee.numAttending != null && attending != null"
+                                                <button v-if="((attendee.numAttending > 0 && attending) || (attendee.numAttending === 0 && !attending)) && (attendee.numAttending != null && attending != null)"
                                                         type="submit" class="Button">
                                                     Submit
                                                 </button>
@@ -273,7 +273,7 @@
                         this.doneWithRsvp = true;
                     })
                     .catch(({response}) => {
-                            this.errors = {0: 'Hmmm. That code doesn\'t seem correct. Try checking the spelling one more time?'}
+                            this.errors = {0: 'Something went wrong. Please try entering your code again.'}
                         }
                     );
             },

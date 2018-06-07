@@ -31,7 +31,7 @@ class SendRsvpMailService
             \Mail::raw("New Guest RSVPd: $attendee->name NumAttending: $attendee->num_attending NumPlusOnesAllowed: $attendee->num_plus_ones_allowed Code: $attendee->code Emails: " . json_encode($transformer->transformCollection($attendee->eventContacts)), function ($message) use ($attendee) {
                 /**@var Message $message */
                 $message->to('szomba.ceane@gmail.com');
-                $message->from('newleyweds@szombathy.com');
+                $message->from('newlyweds@szombathy.com');
                 $message->subject('New Guest RSVPd: ' . $attendee->name);
             });
         } catch (\Exception $e) {
