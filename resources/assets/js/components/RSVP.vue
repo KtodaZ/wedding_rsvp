@@ -104,7 +104,7 @@
                                             <div class="Form-container">
                                                 <label class="norm-text col-md-6 col-xs-12">
                                                     <input type="radio" id="yesRadio" :value="true" v-model="attending"
-                                                           v-on:click="this.setNumAttendingBtnColor">
+                                                           v-on:click="this.setNumAttendingBtnColor()">
                                                     YES. Let's party!
                                                 </label>
                                                 <label class="norm-text col-md-6 col-xs-12">
