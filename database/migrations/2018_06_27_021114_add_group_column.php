@@ -16,7 +16,7 @@ class AddGroupColumn extends Migration
     public function up()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->integer('group_number');
+            $table->integer('group_number')->after('replied');
         });
     }
 
