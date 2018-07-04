@@ -24,8 +24,8 @@ class SimpleEmailRequest extends FormRequest
     {
         return [
             'test'    => 'boolean',
-            'subject' => 'required|string',
-            'body'    => 'required|string',
+            'subject' => 'string',
+            'body'    => 'string',
             'links'   => 'json',
         ];
     }
