@@ -1,3 +1,3 @@
 <?php
 
-Route::post('simple_email', '\App\Http\Controllers\Rpc\UpdateEmailController@sendEventContactsEmail')->middleware('auth');
+Route::any('simple_email', '\App\Http\Controllers\Rpc\UpdateEmailController@sendEventContactsEmail')->middleware('auth');
