@@ -21,3 +21,6 @@
 
 Route::resource('attendee', '\App\Http\Controllers\Api\AttendeeController', ['only' => ['show', 'store']])
     ->middleware('auth');
+
+
+Route::post('simple_email', '\App\Http\Controllers\Rpc\UpdateEmailController@sendEventContactsEmail')->middleware('auth');
