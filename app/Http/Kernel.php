@@ -56,6 +56,11 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        'rpc' => [
+            'throttle:60,1',
+            'bindings',
+        ],
     ];
 
     /**

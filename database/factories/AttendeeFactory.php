@@ -30,6 +30,7 @@ $factory->define(Attendee::class, function (Faker $faker) {
         'num_attending'         => $numAttending,
         'replied'               => $replied,
         'num_plus_ones_allowed' => $numPlusOnesAllowed,
-        'code' => 'placeholder'
+        'code'                  => 'placeholder',
+        'group_number'          => 0
     ];
 });
