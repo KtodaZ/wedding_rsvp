@@ -11,9 +11,9 @@ class UpdateEmailController extends Controller
 
     public function sendEventContactsEmail(SimpleEmailRequest $request)
     {
-        $isTest = $request->get('test');
-        $subject = $request->get('subject');
-        $body = $request->get('body');
+        $isTest = $request->input('test');
+        $subject = $request->input('subject');
+        $body = $request->input('body');
         $links = json_decode($request->get('links'));
 
         $emailsSent = [];
