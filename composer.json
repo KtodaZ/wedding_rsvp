@@ -8,16 +8,16 @@
         "php": ">=7.0.0",
         "barryvdh/laravel-ide-helper": "^2.4",
         "doctrine/dbal": "^2.6",
-        "fideloper/proxy": "~3.3",
+        "fideloper/proxy": "^4.0",
       "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0"
+        "phpunit/phpunit": "^7.0"
     },
     "autoload": {
         "classmap": [
@@ -52,8 +52,7 @@
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan config:cache",
-            "php artisan route:cache",
-            "php artisan optimize --force"
+            "php artisan route:cache"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -62,8 +61,7 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta",
-            "php artisan optimize"
+            "php artisan ide-helper:meta"
         ]
     },
     "config": {
