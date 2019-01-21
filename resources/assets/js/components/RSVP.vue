@@ -148,7 +148,7 @@
                                                 <div class="Form-container">
                                                     <transition-group name="fadeRight" tag="p" leave-active-class="">
                                                         <div v-for="(contact, index) in attendee.eventContacts"
-                                                             :key="index">
+                                                             :key="'contact' + index">
                                                             <div class="input-group" style="padding-bottom: 1rem;">
                                                                 <input type="email"
                                                                        class="Input-text"
